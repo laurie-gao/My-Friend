@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="200dp"
-        android:layout_marginTop="470dp"
+        android:layout_marginTop="440dp"
         android:layout_marginLeft="40dp"
         android:src="@drawable/molang"
         />
@@ -18,7 +18,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="200dp"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="410dp"
         android:layout_marginLeft="230dp"
         android:src="@drawable/molang1"
         />
@@ -26,7 +26,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="90dp"
         android:layout_marginLeft="100dp"
         android:src="@drawable/chicken"
         />
@@ -36,7 +36,7 @@
         android:layout_width="180dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="210dp"
         android:text="Translate Image"
         android:textSize="20sp"
         android:textAllCaps="false"
@@ -48,7 +48,7 @@
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="310dp"
         android:text="Chat Bot"
         android:textSize="20sp"
         android:textAllCaps="false"

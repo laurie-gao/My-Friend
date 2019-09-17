@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button translateImageBtn = (Button) findViewById(R.id.translateImageBtn);
+        Button translateImageBtn = findViewById(R.id.translateImageBtn);
         translateImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
