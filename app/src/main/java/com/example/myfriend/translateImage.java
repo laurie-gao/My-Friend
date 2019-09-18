@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
@@ -28,6 +31,9 @@ import com.microsoft.azure.cognitiveservices.vision.computervision.models.Landma
 import com.microsoft.azure.cognitiveservices.vision.computervision.models.VisualFeatureTypes;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +46,8 @@ public class translateImage extends AppCompatActivity {
     private String subscriptionKey = "d964c2e378b1498da6b7956d60f1415a";
     private String endpoint =  "https://laurie.cognitiveservices.azure.com/";
 
+    static final int REQUEST_IMAGE_CAPTURE = 0;
+    static final int IMAGE_GALLERY_REQUEST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +64,21 @@ public class translateImage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(takePictureIntent,0);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+
+        });
+
+        albumBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK);
+                File photoDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                String photoDirectoryPath = photoDirectory.getPath();
+                Uri data = Uri.parse(photoDirectoryPath);
+
+                pickPhotoIntent.setDataAndType(data,"image/*");
+                startActivityForResult(pickPhotoIntent, IMAGE_GALLERY_REQUEST);
             }
 
         });
@@ -64,11 +86,26 @@ public class translateImage extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-        blank.setImageBitmap(bitmap);
-        MyBitMap cameraBitmap = new MyBitMap(bitmap, client);
-        new analyzeImage(this).execute(cameraBitmap);
+        if (requestCode == REQUEST_IMAGE_CAPTURE){
+            super.onActivityResult(requestCode, resultCode, data);
+            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+            blank.setImageBitmap(bitmap);
+            MyBitMap cameraBitmap = new MyBitMap(bitmap, client);
+            new analyzeImage(this).execute(cameraBitmap);
+        }
+        if (requestCode == IMAGE_GALLERY_REQUEST){
+            Uri imageUri = data.getData();
+            InputStream inputStream;
+            try {
+                inputStream = getContentResolver().openInputStream(imageUri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                blank.setImageBitmap(bitmap);
+                MyBitMap cameraBitmap = new MyBitMap(bitmap, client);
+                new analyzeImage(this).execute(cameraBitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static class MyBitMap {
@@ -163,13 +200,13 @@ public class translateImage extends AppCompatActivity {
             LinearLayout linearLayout = findViewById(R.id.resultLinearLayout);
             linearLayout.removeAllViews();
             Context myContext = contextRef.get();
-            TextView resultText = new TextView(myContext);
-            resultText.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            resultText.setText(result);
-            resultText.setTextColor(Color.parseColor("#486463"));
-            resultText.setTextSize(30);
-            resultText.setGravity(Gravity.CENTER);
-            linearLayout.addView(resultText);
+            TextView textResult = new TextView(myContext);
+            textResult.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            textResult.setText(result);
+            textResult.setTextColor(Color.parseColor("#FFFFFF"));
+            textResult.setTextSize(25);
+            textResult.setGravity(Gravity.CENTER);
+            linearLayout.addView(textResult);
 
         }
     }

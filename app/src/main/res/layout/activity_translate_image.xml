@@ -33,28 +33,20 @@
         android:layout_width="120dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="430dp"
         android:text="Album"
         android:textSize="20sp"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         android:background="@drawable/translate_image_btn" />
 
-    <!--<TextView
-        android:id="@+id/textResult"
-        android:layout_below="@+id/albumBtn"
-        android:layout_marginTop="70dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        android:textColor="#FFFFFF"/> -->
-
     <LinearLayout
         android:id="@+id/resultLinearLayout"
         android:orientation="horizontal"
         android:layout_below="@+id/albumBtn"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
