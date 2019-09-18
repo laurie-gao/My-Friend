@@ -28,4 +28,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.microsoft.projectoxford:vision:1.0.395'
     implementation group: 'com.microsoft.azure.cognitiveservices', name: 'azure-cognitiveservices-computervision', version: '1.0.2-beta'
+    annotationProcessor 'com.microsoft.azure:azure-annotations:1.2.0'
 }
